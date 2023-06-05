@@ -65,20 +65,20 @@ resource "github_repository_collaborators" "a_repo_collaborators" {
 The following arguments are supported:
 
 * `repository` - (Required) The GitHub repository
-* `user` - (Optional) List of uses
-* `team` - (Optional) List of teams
+* `user` - (Optional) A block containing access permissions for a single user; multiple blocks are permitted
+* `team` - (Optional) A block containing access permissions for a single team; multiple blocks are permitted
 
-The `user` block supports:
+Each `user` block supports:
 
-* `usernames` - (Required) The user to add to the repository as a collaborator.
-* `permission` - (Optional) The permission of the outside collaborators for the repository.
+* `username` - (Required) The username of a user who will have access to the repository as an outside collaborator.
+* `permission` - (Optional) The permission granted to the user in the repository.
             Must be one of `pull`, `push`, `maintain`, `triage` or `admin` or the name of an existing [custom repository role](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-peoples-access-to-your-organization-with-roles/managing-custom-repository-roles-for-an-organization) within the organization for organization-owned repositories.
             Must be `push` for personal repositories. Defaults to `push`.
 
-The `team` block supports:
+Each `team` block supports:
 
-* `team` - (Required) The GitHub team id or the GitHub team slug
-* `permission` - (Optional) The permission of the outside collaborators for the repository.
+* `team` - (Required) The GitHub team id or the GitHub team slug of a team that will have access to the repository as an outside collaborator.
+* `permission` - (Optional) The permission granted to the team in the repository.
   Must be one of `pull`, `triage`, `push`, `maintain`, `admin` or the name of an existing [custom repository role](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-peoples-access-to-your-organization-with-roles/managing-custom-repository-roles-for-an-organization) within the organisation. Defaults to `pull`.
   Must be `push` for personal repositories. Defaults to `push`.
 
@@ -91,7 +91,7 @@ In addition to the above arguments, the following attributes are exported:
 
 ## Import
 
-GitHub Repository Collaborators can be imported using the name `name`, e.g.
+GitHub Repository Collaborators can be imported using the repository name, e.g.
 
 ```
 $ terraform import github_repository_collaborators.collaborators terraform
